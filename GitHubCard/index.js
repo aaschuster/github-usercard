@@ -1,8 +1,12 @@
+import axios from 'axios';
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+axios.get("https://api.github.com/users/aaschuster");
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +53,39 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(obj) {
+  const card = document.createElement("div");
+  const img = document.createElement("img");
+  const info = document.createElement("div");
+  const name = document.createElement("h3");
+  const username = document.createElement("p");
+  const location = document.createElement("p");
+  const profile = document.createElement("p");
+  const a = document.createElement("a");
+  const followers = document.createElement("p");
+  const following = document.createElement("p");
+  const bio = document.createElement("p");
+
+  card.className = "card";
+  info.className = "card-info";
+  name.className = "name";
+  username.className = "username";
+
+  card.appendChild(img);
+  card.appendChild(info);
+
+  info.appendChild(name);
+  info.appendChild(username);
+  info.appendChild(location);
+  info.appendChild(profile);
+  profile.appendChild(a);
+
+  info.appendChild(followers);
+  info.appendChild(following);
+  info.appendChild(bio);
+
+}
 
 /*
   List of LS Instructors Github username's:
