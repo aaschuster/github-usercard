@@ -1,12 +1,26 @@
 import axios from 'axios';
 
+const cards = document.querySelector(".cards");
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
 
-axios.get("https://api.github.com/users/aaschuster");
+// console.log(axios.get("https://api.github.com/users/aaschuster"));
+// cards.appendChild(cardMaker(axios.get("https://api.github.com/users/aaschuster")));
+
+axios.get("https://api.github.com/users/aaschuster")
+.then( res => {
+  console.log(res.data);
+  console.log(res.data.avatar_url);
+  cards.appendChild(cardMaker(res.data));
+  
+})
+.catch( res => {
+  console.log(res.message);
+});
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -32,7 +46,18 @@ axios.get("https://api.github.com/users/aaschuster");
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"];
+
+followersArray.forEach(handle => {
+  axios.get(`https://api.github.com/users/${handle}`)
+  .then( res => {
+    cards.appendChild(cardMaker(res.data));
+    
+  })
+  .catch( res => {
+    console.log(res.message);
+});
+});
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -72,6 +97,20 @@ function cardMaker(obj) {
   name.className = "name";
   username.className = "username";
 
+  img.src = obj.avatar_url;
+  name.textContent = obj.name;
+  username.textContent = obj.login;
+  profile.textContent = "Profile: ";
+  a.href = obj.html_url;;
+  a.textContent = obj.html_url;
+  if(obj.location === null) obj.location = "--";
+  location.textContent = `Location: ${obj.location}`;
+  followers.textContent = `Followers: ${obj.followers}`;
+  following.textContent = `Following: ${obj.following}`;
+  if(obj.bio === null) obj.bio = "--";
+  bio.textContent = `Bio: ${obj.bio}`;
+
+
   card.appendChild(img);
   card.appendChild(info);
 
@@ -85,6 +124,7 @@ function cardMaker(obj) {
   info.appendChild(following);
   info.appendChild(bio);
 
+  return card;
 }
 
 /*
